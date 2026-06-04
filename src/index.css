@@ -1,0 +1,66 @@
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=Tajawal:wght@300;400;500;700;900&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Cairo", "Tajawal", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  
+  --color-luxury-50: #f0f7ff;
+  --color-luxury-100: #e0f2fe;
+  --color-luxury-200: #bae6fd;
+  --color-luxury-300: #7dd3fc;
+  --color-luxury-400: #38bdf8;
+  --color-luxury-500: #0ea5e9;
+  --color-luxury-600: #0284c7;
+  --color-luxury-700: #0369a1;
+  --color-luxury-800: #075985;
+  --color-luxury-900: #0c4a6e;
+  --color-luxury-950: #082f49;
+  
+  --color-brand-primary: #1e3a8a;
+  --color-brand-secondary: #0ea5e9;
+  --color-brand-accent: #2563eb;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: #f8fafc;
+  color: #1e293b;
+  min-height: 100vh;
+  overflow-x: hidden;
+  direction: rtl;
+}
+
+/* Custom scrollbars for a cleaner look */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Custom gorgeous animation for splash element */
+@keyframes pulseGlow {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.95;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 1;
+  }
+}
+
+.pulse-glow {
+  animation: pulseGlow 3s infinite ease-in-out;
+}

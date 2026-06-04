@@ -1,0 +1,6 @@
+{
+  "name": "نظام ODE دراي كلين",
+  "description": "نظام متكامل واحترافي لإدارة طلبات وعملاء محلات دراي كلين وغسيل الملابس والسجاد ومتابعة الأرباح والتحليلات.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
