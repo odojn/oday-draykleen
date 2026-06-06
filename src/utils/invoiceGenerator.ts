@@ -406,12 +406,50 @@ export function downloadMonthlyReport(
   selectedYear: number
 ) {
   const htmlContent = generateMonthlyReportHTML(shopName, orders, history, selectedMonth, selectedYear);
-  const blob = new Blob([htmlContent], { type: 'text/html;charset=utf-8;' });
-  const url = URL.createObjectURL(blob);
-  const link = document.createElement('a');
-  link.href = url;
-  link.setAttribute('download', `تقرير_دراي_كلين_${selectedYear}_${selectedMonth}.html`);
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
+  
+  // 1. Method A: Standard Blob Download (Works perfectly on PC/modern desktop browsers)
+  try {
+    const blob = new Blob([htmlContent], { type: 'text/html;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', `تقرير_دراي_كلين_${selectedYear}_${selectedMonth}.html`);
+    document.body.appendChild(link);
+    link.click();
+    
+    // Clean up
+    setTimeout(() => {
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+    }, 100);
+  } catch (err) {
+    console.error('Error with blob download:', err);
+  }
+
+  // 2. Method B: Automatic opening in a new window/tab (Essential for phone browsers, iOS Safari, Android Chrome)
+  // This opens the browser automatically, displays the live styled invoice, and triggers/allows PDF printing or offline view.
+  try {
+    const reportWindow = window.open('', '_blank');
+    if (reportWindow) {
+      reportWindow.document.write(htmlContent);
+      reportWindow.document.close();
+    } else {
+      // Fallback if blocked by blockpopup: alter location or inject inside current session
+      const fallbackUrl = 'data:text/html;charset=utf-8,' + encodeURIComponent(htmlContent);
+      const fallbackLink = document.createElement('a');
+      fallbackLink.href = fallbackUrl;
+      fallbackLink.target = '_blank';
+      document.body.appendChild(fallbackLink);
+      fallbackLink.click();
+      document.body.removeChild(fallbackLink);
+    }
+  } catch (windowError) {
+    console.warn('Fallback dynamic window opening:', windowError);
+    // Ultimate fallback for strict sandboxed frames: open in data URI
+    try {
+      window.location.href = 'data:text/html;charset=utf-8,' + encodeURIComponent(htmlContent);
+    } catch (e) {
+      console.error('Could not open page data URI:', e);
+    }
+  }
 }

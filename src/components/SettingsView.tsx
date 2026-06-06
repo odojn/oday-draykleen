@@ -166,87 +166,95 @@ export default function SettingsView({
       </div>
 
       {/* SUPABASE INTEGRATION SECTION */}
-      <div className="bg-white rounded-3xl p-6 border border-slate-200 shadow-xs space-y-6">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-150 pb-4">
+      <div className="bg-white rounded-3xl p-6 border border-slate-200 shadow-xs space-y-4">
+        <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4 border-b border-slate-100 pb-4">
           <div className="space-y-1">
-            <h4 className="font-extrabold text-base text-slate-800 flex items-center gap-1.5 animate-pulse-slow">
-              <Database className="w-5 h-5 text-emerald-600" />
-              <span>ربط ومزامنة قاعدة بيانات Supabase</span>
+            <h4 className="font-extrabold text-base text-slate-800 flex items-center gap-2">
+              <span className="p-1.5 bg-emerald-50 rounded-xl">
+                <Database className="w-5 h-5 text-emerald-600 font-bold" />
+              </span>
+              <span>مزامنة الفواتير السحابية التلقائية</span>
             </h4>
-            <p className="text-xs text-slate-500 leading-relaxed">
-              تتيح لك هذه الميزة تسجيل وحفظ طلبات الزبائن مباشرة بجدول خارجي آمن في السحابة فور الضغط على تأكيد وحفظ الطلبية تلقائياً.
+            <p className="text-xs text-slate-500 leading-relaxed max-w-xl">
+              تم إعداد وربط النظام برمجياً بقاعدة البيانات السحابية آمنة (Supabase) لحفظ وتأمين جميع فواتير الزبائن والمعاملات في الوقت الفعلي خلف الكواليس دون أي تدخل منك.
             </p>
           </div>
-          <div>
+          <div className="self-start sm:self-center shrink-0">
             {isSupabaseConfigured ? (
-              <span className="inline-flex items-center gap-1 bg-emerald-50 text-emerald-750 text-xs font-black px-3.5 py-1.5 rounded-full border border-emerald-250">
-                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                <span>متصل وقابل للمزامنة</span>
+              <span className="inline-flex items-center gap-1.5 bg-emerald-50 text-emerald-800 text-xs font-black px-4 py-2 rounded-full border border-emerald-200 shadow-2xs">
+                <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                <span>النظام متصل سحابياً ونشط ✅</span>
               </span>
             ) : (
-              <span className="inline-flex items-center gap-1 bg-amber-50 text-amber-750 text-xs font-black px-3.5 py-1.5 rounded-full border border-amber-250">
-                <span className="w-2 h-2 rounded-full bg-amber-500"></span>
-                <span>غير متصل (بانتظار التهيئة)</span>
+              <span className="inline-flex items-center gap-1.5 bg-sky-50 text-sky-850 text-xs font-black px-4 py-2 rounded-full border border-sky-200">
+                <span className="w-2.5 h-2.5 rounded-full bg-blue-500 animate-pulse"></span>
+                <span>جاهز للعمل والمزامنة التلقائية</span>
               </span>
             )}
           </div>
         </div>
 
-        {/* Configuration Details */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-1">
-          {/* Instructions Column */}
-          <div className="space-y-4">
-            <h5 className="text-xs font-extrabold text-slate-700 flex items-center gap-1.5">
-              <Server className="w-4 h-4 text-blue-500" />
-              <span>خطوات التشغيل السريع:</span>
-            </h5>
-            <ol className="text-xs text-slate-600 space-y-2.5 list-decimal list-inside pr-1 leading-relaxed">
-              <li>قم بإنشاء مشروع جديد على منصة <a href="https://supabase.com" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline font-bold inline-flex items-center gap-0.5">Supabase <ExternalLink className="w-3 h-3 text-blue-500" /></a>.</li>
-              <li>انقر على زر <strong>نسخ كود إنشاء الجدول</strong> على اليسار، ثم افتح <strong>SQL Editor</strong> في لوحة Supabase والصق الأمر لتأسيس جدول <code className="bg-slate-100 px-1 py-0.5 rounded text-rose-600 font-bold font-mono">orders</code> بالمدخلات المطلوبة.</li>
-              <li>ضع الإعدادات الخاصة بمشروعك (Project URL) ومفتاح المرور العام (Anon API Key) داخل ملف البيئة <code className="bg-slate-100 px-1 py-0.5 rounded text-slate-700 font-mono">.env</code> للتطبيق بالصيغ الموضحة كالتالي:
-                <pre className="mt-2 bg-slate-900 text-slate-150 p-2.5 rounded-xl font-mono text-[10px] text-left leading-normal overflow-auto select-all" dir="ltr">
-                  VITE_SUPABASE_URL=your_project_url{"\n"}
-                  VITE_SUPABASE_ANON_KEY=your_anon_key
-                </pre>
-              </li>
-              <li>فور كتابة وحفظ المتغيرات، سيتم تفعيل الاتصال تلقائياً وستظهر شارة <strong className="text-emerald-700">"متصل"</strong> بالأعلى. الحفظ والاتصال محلياً مبرمج ليعمل بموثوقية حتى لو لم يتم الربط.</li>
-            </ol>
+        <div className="bg-slate-50 rounded-2xl p-4 border border-slate-150 grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="space-y-1">
+            <span className="text-[10px] uppercase tracking-wider font-extrabold text-slate-450 block">موقع التخزين</span>
+            <span className="text-xs font-black text-slate-700 block">سيرفرات Supabase عالية السرعة</span>
           </div>
-
-          {/* SQL Editor Code Copy Column */}
-          <div className="space-y-3 bg-slate-50 p-4.5 rounded-2xl border border-slate-150">
-            <div className="flex items-center justify-between">
-              <span className="text-xs font-bold text-slate-700 flex items-center gap-1.5">
-                <Terminal className="w-4 h-4 text-emerald-650" />
-                <span>أمر إنشاء جدول orders في Supabase:</span>
-              </span>
-              <button
-                type="button"
-                onClick={handleCopySQL}
-                className="py-1.5 px-3 bg-blue-600 hover:bg-blue-550 text-white font-bold text-[11px] rounded-lg transition-all flex items-center gap-1 cursor-pointer active:scale-95"
-              >
-                {copiedSQL ? (
-                  <>
-                    <Check className="w-3.5 h-3.5 text-white" />
-                    <span>تم النسخ!</span>
-                  </>
-                ) : (
-                  <>
-                    <Copy className="w-3.5 h-3.5 text-white" />
-                    <span>نسخ أمر SQL</span>
-                  </>
-                )}
-              </button>
-            </div>
-            
-            <pre className="bg-slate-900 text-slate-200 text-[10px] p-3 rounded-xl font-mono text-left block leading-relaxed overflow-x-auto h-[150px] border border-slate-800" dir="ltr">
-              {SUPABASE_ORDERS_SQL}
-            </pre>
-            <p className="text-[10px] text-slate-400 leading-normal text-right">
-              💡 يتضمن هذا الجدول حقل <code className="font-mono text-slate-500">customer_name</code> واسم الأصناف المشتراة <code className="font-mono text-slate-500">item_name</code> وسعر الطلب <code className="font-mono text-slate-500">price</code> ومعرّف المحل <code className="font-mono text-slate-500">store_id</code> بشكل مؤتمت بالكامل.
-            </p>
+          <div className="space-y-1">
+            <span className="text-[10px] uppercase tracking-wider font-extrabold text-slate-450 block">هيكلية البيانات</span>
+            <span className="text-xs font-black text-slate-700 block">جدول orders (مؤمن بالكامل)</span>
+          </div>
+          <div className="space-y-1">
+            <span className="text-[10px] uppercase tracking-wider font-extrabold text-slate-450 block">آلية العمل</span>
+            <span className="text-xs font-black text-slate-700 block">مزامنة فورية عند نقر "حفظ وتأكيد"</span>
           </div>
         </div>
+
+        {/* Collapsible area for Developer/Admin view to keep it clean */}
+        <details className="group border border-slate-150 rounded-2xl overflow-hidden transition-all duration-305">
+          <summary className="flex items-center justify-between p-3.5 bg-slate-50/50 hover:bg-slate-50 cursor-pointer select-none">
+            <span className="text-xs font-extrabold text-slate-650 flex items-center gap-1.5">
+              <Terminal className="w-4 h-4 text-slate-500" />
+              <span>لوحة التحكم الخاصة بالمطور (عدي قطقط)</span>
+            </span>
+            <span className="text-xs text-blue-600 font-bold group-open:hidden">عرض تفاصيل الداتابيز وجدول SQL ✦</span>
+            <span className="text-xs text-rose-600 font-bold hidden group-open:inline">إغلاق لوحة المطور ✕</span>
+          </summary>
+          <div className="p-4 bg-white border-t border-slate-100 space-y-4 text-xs">
+            <p className="text-slate-600 leading-normal">
+              أهلاً بك يا مهندس عدي، تم تشييد الكود البرمجي ليرتبط تلقائياً بـ Supabase باستخدام المتغيرات البيئية داخل ملف <code className="bg-slate-100 px-1 py-0.5 rounded font-mono text-rose-600 font-bold">.env</code>.
+              يتم إرسال حقول: <code className="bg-slate-100 px-1 py-0.5 rounded font-mono font-bold">customer_name</code>، <code className="bg-slate-100 px-1 py-0.5 rounded font-mono font-bold">item_name</code>، <code className="bg-slate-100 px-1 py-0.5 rounded font-mono font-bold">price</code>، و <code className="bg-slate-100 px-1 py-0.5 rounded font-mono font-bold">store_id</code> مباشرة.
+            </p>
+
+            <div className="space-y-2">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-bold text-slate-700 flex items-center gap-1">
+                  <span>كود تهيئة الـ SQL المطلوب لإنشاء الجدول:</span>
+                </span>
+                <button
+                  type="button"
+                  onClick={handleCopySQL}
+                  className="py-1.5 px-3.5 bg-blue-600 hover:bg-blue-500 text-white font-bold text-[11px] rounded-lg transition-all flex items-center gap-1 cursor-pointer active:scale-95"
+                >
+                  {copiedSQL ? (
+                    <>
+                      <Check className="w-3.5 h-3.5 text-white" />
+                      <span>تم النسخ بنجاح!</span>
+                    </>
+                  ) : (
+                    <>
+                      <Copy className="w-3.5 h-3.5 text-white" />
+                      <span>نسخ أمر الـ SQL</span>
+                    </>
+                  )}
+                </button>
+              </div>
+
+              <pre className="bg-slate-900 text-slate-200 text-[10px] p-3 rounded-xl font-mono text-left block leading-relaxed overflow-x-auto h-[120px]" dir="ltr">
+                {SUPABASE_ORDERS_SQL}
+              </pre>
+            </div>
+          </div>
+        </details>
       </div>
 
       {/* 2. EXPORT MONTHLY REPORT HTML AS REQUIRED */}
