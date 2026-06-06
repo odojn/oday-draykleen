@@ -25,6 +25,9 @@ import ReadyOrdersView from './components/ReadyOrdersView';
 import AboutUsView from './components/AboutUsView';
 import SettingsView from './components/SettingsView';
 
+// Import Supabase service
+import { insertOrderToSupabase, isSupabaseConfigured } from './utils/supabaseClient';
+
 export default function App() {
   // --- Persistent Storage Setup ---
   const [onboardingStep, setOnboardingStep] = useState<number>(() => {
@@ -134,6 +137,23 @@ export default function App() {
     };
 
     setHistory((prev) => [newHistRecord, ...prev]);
+
+    // --- Supabase Automatic Sync Integration ---
+    const itemsSummary = newOrder.items.map(it => `${it.name} (${it.quantity})`).join('، ');
+    
+    // Call the helper to insert into 'orders' block
+    insertOrderToSupabase({
+      customer_name: newOrder.customerName,
+      item_name: itemsSummary || 'خدمة عامة دراي كلين',
+      price: newOrder.totalPrice,
+      store_id: shopName || 'ODE_Shop'
+    }).then(res => {
+      if (res.success) {
+        console.log('✅ Supabase Insert Dynamic Success:', res.data);
+      } else {
+        console.warn('⚠️ Supabase Async Warning:', res.error);
+      }
+    });
   };
 
   const handleEditOrder = (orderId: string, updatedOrder: Order) => {
